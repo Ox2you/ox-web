@@ -6,6 +6,7 @@ import App from "./App.tsx";
 import { Provider } from "./provider.tsx";
 import "@/styles/globals.css";
 import "leaflet/dist/leaflet.css";
+import "./index.css"; // Importa o CSS global
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

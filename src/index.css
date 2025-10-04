@@ -1,0 +1,19 @@
+/* src/index.css */
+
+/* Importação do CSS do Leaflet */
+@import "leaflet/dist/leaflet.css";
+
+/* Estilos globais para o Leaflet */
+.leaflet-pane {
+  z-index: 2 !important; /* Garante que as camadas do Leaflet fiquem abaixo do modal */
+}
+
+/* Configuração do Tailwind CSS */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Corrige problemas com ícones do Leaflet */
+.leaflet-container img {
+  max-width: none;
+}

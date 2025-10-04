@@ -1,12 +1,18 @@
 import {
+  Button,
+} from "@heroui/button";
+
+import {
+  useDisclosure,
+} from "@heroui/use-disclosure";
+
+import {
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
-  ModalFooter,
-  Button,
-  useDisclosure,
-} from "@heroui/react";
+  ModalFooter
+} from "@heroui/modal";
 
 export default function AirPopup() {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -14,7 +20,7 @@ export default function AirPopup() {
   return (
     <>
       <Button onPress={onOpen}>Open Modal</Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} className="z-[1000]">
         <ModalContent>
           {(onClose) => (
             <>

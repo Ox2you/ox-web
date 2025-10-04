@@ -4,6 +4,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { UserLocation } from "../components/user-location";
 import { LocationSearch } from "../components/location-search";
+import  AirPopup  from "../components/air-popup";
 
 export default function IndexPage() {
   const [userLocation, setUserLocation] = useState<{
@@ -62,6 +63,7 @@ export default function IndexPage() {
         ) : (
           <div id="map" style={{ height: "400px", width: "100%" }} />
         )}
+        <AirPopup></AirPopup>
       </section>
     </DefaultLayout>
   );
