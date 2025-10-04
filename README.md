@@ -1,8 +1,7 @@
-# Vite & HeroUI Template
+# Ox2you
 
-This is a template for creating applications using Vite and HeroUI (v2).
+Ox2you - todo description
 
-[Try it on CodeSandbox](https://githubbox.com/heroui-inc/vite-template)
 
 ## Technologies Used
 
@@ -18,7 +17,7 @@ This is a template for creating applications using Vite and HeroUI (v2).
 To clone the project, run the following command:
 
 ```bash
-git clone https://github.com/heroui-inc/vite-template.git
+git clone https://github.com/Ox2you/ox-web.git
 ```
 
 ### Install dependencies
