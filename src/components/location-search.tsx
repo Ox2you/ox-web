@@ -195,7 +195,7 @@ export const LocationSearch = ({ onLocationChange }: LocationSearchProps) => {
   }, [highlightIndex]);
 
   return (
-    <div className="flex w-full flex-col gap-2 relative">
+    <div className="flex min-w-[500px] flex-col gap-2 relative">
       <Input
         label="Buscar Localização..."
         type="text"

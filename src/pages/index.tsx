@@ -4,7 +4,16 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { UserLocation } from "../components/user-location";
 import { LocationSearch } from "../components/location-search";
-import AirPopup from "../components/air-popup";
+import  AirPopup  from "../components/air-popup";
+import  FilterPopup  from "../components/filter-popup";
+
+import {
+  Button,
+} from "@heroui/button";
+
+import {
+  useDisclosure,
+} from "@heroui/use-disclosure";
 
 // Pontos fixos de exemplo em Londres (sem marcadores, só círculos com tooltip)
 const airQualityPoints = [
@@ -35,6 +44,9 @@ const airQualityPoints = [
 ];
 
 export default function IndexPage() {
+
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();  // Gerencia o estado aqui
+  
   const [userLocation, setUserLocation] = useState<{
     lat: number;
     lng: number;
@@ -66,7 +78,7 @@ export default function IndexPage() {
       .bindPopup("Você está aqui!")
       .openPopup();
 
-    // Adiciona só os círculos coloridos (sem marcadores) com tooltip no hover
+        // Adiciona só os círculos coloridos (sem marcadores) com tooltip no hover
     airQualityPoints.forEach((point) => {
       L.circle([point.lat, point.lng], {
         color: point.color,
@@ -93,14 +105,18 @@ export default function IndexPage() {
     <DefaultLayout>
       <UserLocation onLocationChange={handleLocationChange} />
       <section className="flex flex-col items-center justify-center gap-4">
-        <LocationSearch
-          onLocationChange={(location) => {
-            if (location) {
-              setUserLocation(location);
-              setIsLoading(false);
-            }
-          }}
-        />
+        <div className="flex flex-row items-center justify-center">
+          <LocationSearch
+            onLocationChange={(location) => {
+              if (location) {
+                setUserLocation(location);
+                setIsLoading(false);
+              }
+            }}
+          />
+          <div><Button onPress={onOpen}>Abrir Filtros</Button></div>
+          <FilterPopup isOpen={isOpen} onOpenChange={onOpenChange} />
+        </div>
         {isLoading ? (
           <div
             className="flex items-center justify-center"
@@ -111,7 +127,7 @@ export default function IndexPage() {
         ) : (
           <div id="map" style={{ height: "400px", width: "100%" }} />
         )}
-        <AirPopup />
+        <AirPopup></AirPopup>
       </section>
     </DefaultLayout>
   );
