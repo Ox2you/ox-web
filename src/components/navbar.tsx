@@ -10,13 +10,12 @@ export const Navbar = () => {
     >
       <NavbarContent justify="start">
         <NavbarItem className="flex items-center">
-          <div onClick={(e) => e.preventDefault()}>
-            <img
-              src="../public/Logo.png"
-              alt="Logo"
-              className="h-20 w-auto max-h-[80px] object-contain"
-            />
-          </div>
+          <img
+            src="../public/Logo.png" // Ajustado para pasta public
+            alt="Logo"
+            className="h-20 w-auto max-h-[80px] object-contain cursor-pointer"
+            onClick={() => window.location.reload()} // Evento de clique diretamente na imagem
+          />
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
