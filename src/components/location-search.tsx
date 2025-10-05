@@ -68,7 +68,7 @@ export const LocationSearch = ({ onLocationChange }: LocationSearchProps) => {
     }
   }, [searchQuery, showSuggestions]);
 
-  // Busca com debounce
+  // Busca com debounce (idioma: inglês)
   useEffect(() => {
     if (!searchQuery.trim()) {
       setSuggestions([]);
@@ -84,7 +84,7 @@ export const LocationSearch = ({ onLocationChange }: LocationSearchProps) => {
         const response = await fetch(
           `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
             searchQuery
-          )}&limit=5`
+          )}&limit=5&accept-language=en` // 👈 idioma inglês
         );
         const data = await response.json();
 
@@ -134,7 +134,9 @@ export const LocationSearch = ({ onLocationChange }: LocationSearchProps) => {
 
     try {
       const response = await fetch(
-        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}`
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+          searchQuery
+        )}&accept-language=en` // 👈 idioma inglês
       );
       const data = await response.json();
 
