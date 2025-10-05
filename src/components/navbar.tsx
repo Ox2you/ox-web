@@ -10,11 +10,13 @@ export const Navbar = () => {
     >
       <NavbarContent justify="start">
         <NavbarItem className="flex items-center">
-          <img
-            src="../public/Logo.png"
-            alt="Logo"
-            className="h-20 w-auto max-h-[80px] object-contain"
-          />
+          <div onClick={(e) => e.preventDefault()}>
+            <img
+              src="../public/Logo.png"
+              alt="Logo"
+              className="h-20 w-auto max-h-[80px] object-contain"
+            />
+          </div>
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">

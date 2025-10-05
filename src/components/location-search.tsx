@@ -195,9 +195,9 @@ export const LocationSearch = ({ onLocationChange }: LocationSearchProps) => {
   }, [highlightIndex]);
 
   return (
-    <div className="flex min-w-[500px] flex-col gap-2 relative">
+    <div className="flex min-w-[500px] flex-col gap-2 relative mb-4">
       <Input
-        label="Buscar Localização..."
+        label="Search Location..."
         type="text"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}

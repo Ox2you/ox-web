@@ -4,16 +4,11 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { UserLocation } from "../components/user-location";
 import { LocationSearch } from "../components/location-search";
-import  AirPopup  from "../components/air-popup";
-import  FilterPopup  from "../components/filter-popup";
+import AirPopup from "../components/air-popup";
+import FilterPopup from "../components/filter-popup";
 
-import {
-  Button,
-} from "@heroui/button";
-
-import {
-  useDisclosure,
-} from "@heroui/use-disclosure";
+import { Button } from "@heroui/button";
+import { useDisclosure } from "@heroui/use-disclosure";
 
 // Pontos fixos de exemplo em Londres (sem marcadores, só círculos com tooltip)
 const airQualityPoints = [
@@ -22,31 +17,27 @@ const airQualityPoints = [
     lng: -0.1278,
     color: "#ff0000", // Vermelho
     tooltip: "Air Quality: Poor",
+    image: "../src/imagem/triste.png", // Ajustado para pasta public
   },
   {
     lat: 51.5072,
     lng: -0.1657,
     color: "#00ff00", // Verde
     tooltip: "Air Quality: good",
+    image: "../src/imagem/feliz.png", // Ajustado para pasta public
   },
   {
     lat: 51.5055,
     lng: -0.0204,
     color: "#ffff00", // Amarelo
     tooltip: "Air Quality: Moderate",
-  },
-  {
-    lat: 51.5595,
-    lng: -0.1703,
-    color: "#00ff00", // Verde
-    tooltip: "Air Quality: good",
+    image: "../src/imagem/moderada.png", // Ajustado para pasta public
   },
 ];
 
 export default function IndexPage() {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure(); // Gerencia o estado aqui
 
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();  // Gerencia o estado aqui
-  
   const [userLocation, setUserLocation] = useState<{
     lat: number;
     lng: number;
@@ -75,11 +66,18 @@ export default function IndexPage() {
     // Marcador do usuário (mantido)
     L.marker([userLocation.lat, userLocation.lng])
       .addTo(map)
-      .bindPopup("Você está aqui!")
+      .bindPopup("You are Here!")
       .openPopup();
 
-        // Adiciona só os círculos coloridos (sem marcadores) com tooltip no hover
+    // Adiciona os círculos coloridos com tooltip contendo texto e imagem (se houver)
     airQualityPoints.forEach((point) => {
+      const tooltipContent = point.image
+        ? `<div style="text-align: center; padding: 8px;">
+             <img src="${point.image}" alt="Air quality icon" style="width: 32px; height: 32px; display: block; margin: 0 auto 8px;" />
+             <div>${point.tooltip}</div>
+           </div>`
+        : point.tooltip;
+
       L.circle([point.lat, point.lng], {
         color: point.color,
         fillColor: point.color,
@@ -88,10 +86,10 @@ export default function IndexPage() {
         weight: 2,
       })
         .addTo(map)
-        .bindTooltip(point.tooltip, {
+        .bindTooltip(tooltipContent, {
           permanent: false, // Aparece só no hover
           direction: "auto",
-          className: "custom-tooltip", // Pra estilizar se quiser (CSS extra)
+          className: "custom-tooltip", // Para estilizar via CSS se quiser
         });
     });
 
@@ -114,7 +112,11 @@ export default function IndexPage() {
               }
             }}
           />
-          <div><Button onPress={onOpen}>Abrir Filtros</Button></div>
+          <div>
+            <Button onPress={onOpen} className="ml-5">
+              Open Filters
+            </Button>
+          </div>
           <FilterPopup isOpen={isOpen} onOpenChange={onOpenChange} />
         </div>
         {isLoading ? (
@@ -122,12 +124,12 @@ export default function IndexPage() {
             className="flex items-center justify-center"
             style={{ height: "400px", width: "100%" }}
           >
-            <p>Carregando mapa...</p>
+            <p>Loading map...</p>
           </div>
         ) : (
           <div id="map" style={{ height: "400px", width: "100%" }} />
         )}
-        <AirPopup></AirPopup>
+        <AirPopup />
       </section>
     </DefaultLayout>
   );
