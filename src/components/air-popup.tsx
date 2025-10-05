@@ -168,8 +168,8 @@ export default function AirPopup({ airQuality, isOpen, onOpenChange }: AirPopupP
                 <p className="flex-1">{body}</p>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Close
+                <Button color="primary" variant="light" onPress={onClose}>
+                  OK
                 </Button>
               </ModalFooter>
             </>
