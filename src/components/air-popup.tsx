@@ -174,7 +174,7 @@ export default function AirPopup({
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         className="fixed left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[2000] pointer-events-none"
-        style={{ top: window.innerWidth < 640 ? "52vh" : "40vh" }} // Mobile levemente abaixo do centro, Desktop um pouco acima
+        style={{ top: window.innerWidth < 640 ? "56vh" : "40vh" }} // Mobile levemente abaixo do centro, Desktop um pouco acima
       >
         <ModalContent className="w-full max-w-sm sm:max-w-md rounded-lg shadow-lg dark:shadow-gray-700/50 pointer-events-auto">
           {(onClose) => (

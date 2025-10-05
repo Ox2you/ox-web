@@ -84,7 +84,7 @@ export const LocationSearch = ({ onLocationChange }: LocationSearchProps) => {
         const response = await fetch(
           `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
             searchQuery
-          )}&limit=5&accept-language=en` // 👈 idioma inglês
+          )}&limit=5&accept-language=en`
         );
         const data = await response.json();
 
@@ -136,7 +136,7 @@ export const LocationSearch = ({ onLocationChange }: LocationSearchProps) => {
       const response = await fetch(
         `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
           searchQuery
-        )}&accept-language=en` // 👈 idioma inglês
+        )}&accept-language=en`
       );
       const data = await response.json();
 
@@ -197,7 +197,7 @@ export const LocationSearch = ({ onLocationChange }: LocationSearchProps) => {
   }, [highlightIndex]);
 
   return (
-    <div className="flex min-w-[500px] flex-col gap-2 relative mb-4">
+    <div className="flex flex-col w-full sm:min-w-[500px] gap-2 relative mb-4 px-4 sm:px-0">
       <Input
         label="Search Location..."
         type="text"
@@ -205,6 +205,7 @@ export const LocationSearch = ({ onLocationChange }: LocationSearchProps) => {
         onChange={(e) => setSearchQuery(e.target.value)}
         ref={inputRef}
         onKeyDown={handleKeyDown}
+        className="w-full"
       />
 
       {showSuggestions &&
