@@ -12,10 +12,10 @@ import { useEffect, useState } from "react";
 
 
 // Import PNG icons from the img folder
-import goodAirQuality from "../img/good-air-quality.png";
-import moderateAirQuality from "../img/moderate-air-quality.png";
-import poorAirQuality from "../img/poor-air-quality.png";
-import notFound from "../img/not-found.png";
+import goodAirQuality from "../imagem/good-air-quality.png";
+import moderateAirQuality from "../imagem/moderate-air-quality.png";
+import poorAirQuality from "../imagem/poor-air-quality.png";
+import notFound from "../imagem/not-found.png";
 
 
 // Define the type for the airQuality prop

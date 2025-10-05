@@ -6,8 +6,17 @@ export const Navbar = () => {
     <HeroUINavbar
       maxWidth="xl"
       position="sticky"
-      className="min-h-[40px] py-1" // Reduz a altura mínima e o padding vertical
+      className="min-h-[96px] py-3"
     >
+      <NavbarContent justify="start">
+        <NavbarItem className="flex items-center">
+          <img
+            src="../public/Logo.png"
+            alt="Logo"
+            className="h-20 w-auto max-h-[80px] object-contain"
+          />
+        </NavbarItem>
+      </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem className="flex items-center">
           <ThemeSwitch />
