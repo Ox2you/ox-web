@@ -96,13 +96,13 @@ export const LocationSearch = ({ onLocationChange }: LocationSearchProps) => {
         } else {
           setSuggestions([]);
           setShowSuggestions(false);
-          setError("Nenhum local encontrado.");
+          setError("No location found");
         }
       } catch (err) {
-        console.error("Erro ao buscar sugestões:", err);
+        console.error("Failed to fetch suggestions:", err);
         setSuggestions([]);
         setShowSuggestions(false);
-        setError("Erro ao buscar sugestões. Tente novamente.");
+        setError("Failed to fetch suggestions. Try again.");
       }
     }, 300);
 
@@ -123,7 +123,7 @@ export const LocationSearch = ({ onLocationChange }: LocationSearchProps) => {
 
   const handleSearch = async () => {
     if (!searchQuery.trim()) {
-      setError("Por favor, insira um local para buscar.");
+      setError("Please, enter a local to search");
       return;
     }
 
@@ -143,12 +143,12 @@ export const LocationSearch = ({ onLocationChange }: LocationSearchProps) => {
         onLocationChange({ lat: parseFloat(lat), lng: parseFloat(lon) });
         setError(null);
       } else {
-        setError("Nenhum local encontrado.");
+        setError("No location found.");
         onLocationChange(null);
       }
     } catch (err) {
-      console.error("Erro ao buscar localização:", err);
-      setError("Erro ao buscar localização. Tente novamente.");
+      console.error("Error fetching location:", err);
+      setError("Failed to fetch suggestions. Try again.");
       onLocationChange(null);
     }
   };

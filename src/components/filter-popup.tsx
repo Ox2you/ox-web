@@ -22,8 +22,8 @@ export default function FilterPopup({
   const [endDateTime, setEndDateTime] = useState<string>("");
 
   const handleApply = () => {
-    console.log("Data/Hora Inicial:", startDateTime);
-    console.log("Data/Hora Final:", endDateTime);
+    console.log("Start Date/Time:", startDateTime);
+    console.log("End Date/Time::", endDateTime);
     onOpenChange(false); // Fecha o modal
   };
 
@@ -32,10 +32,10 @@ export default function FilterPopup({
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="flex flex-col gap-1">Filtros</ModalHeader>
+            <ModalHeader className="flex flex-col gap-1">Filters</ModalHeader>
             <ModalBody className="flex flex-col gap-4">
               <div className="flex flex-col gap-1">
-                <label htmlFor="startDateTime">Data/Hora Inicial:</label>
+                <label htmlFor="startDateTime">Start Date/Time:</label>
                 <input
                   id="startDateTime"
                   type="datetime-local"
@@ -45,7 +45,7 @@ export default function FilterPopup({
                 />
               </div>
               <div className="flex flex-col gap-1">
-                <label htmlFor="endDateTime">Data/Hora Final:</label>
+                <label htmlFor="endDateTime">End Date/Time:</label>
                 <input
                   id="endDateTime"
                   type="datetime-local"
@@ -60,7 +60,7 @@ export default function FilterPopup({
                 Close
               </Button>
               <Button color="primary" onPress={handleApply}>
-                Aplicar
+                Apply
               </Button>
             </ModalFooter>
           </>

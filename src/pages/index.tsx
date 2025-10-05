@@ -6,43 +6,46 @@ import { UserLocation } from "../components/user-location";
 import { LocationSearch } from "../components/location-search";
 import AirPopup from "../components/air-popup";
 import FilterPopup from "../components/filter-popup";
-
 import { Button } from "@heroui/button";
 import { useDisclosure } from "@heroui/use-disclosure";
 
-// Pontos fixos de exemplo em Londres (sem marcadores, só círculos com tooltip)
+// Define AirQuality type for consistency
+type AirQuality = "good" | "moderate" | "poor";
+
+// Fixed example points in London
 const airQualityPoints = [
   {
     lat: 51.5074,
     lng: -0.1278,
-    color: "#ff0000", // Vermelho
+    color: "#ff0000", // Red
     tooltip: "Air Quality: Poor",
-    image: "../src/imagem/triste.png", // Ajustado para pasta public
+    image: "../src/imagem/triste.png",
+    airQuality: "poor" as AirQuality,
   },
   {
     lat: 51.5072,
     lng: -0.1657,
-    color: "#00ff00", // Verde
-    tooltip: "Air Quality: good",
-    image: "../src/imagem/feliz.png", // Ajustado para pasta public
+    color: "#00ff00", // Green
+    tooltip: "Air Quality: Good",
+    image: "../src/imagem/feliz.png",
+    airQuality: "good" as AirQuality,
   },
   {
     lat: 51.5055,
     lng: -0.0204,
-    color: "#ffff00", // Amarelo
+    color: "#ffff00", // Yellow
     tooltip: "Air Quality: Moderate",
-    image: "../src/imagem/moderada.png", // Ajustado para pasta public
+    image: "../src/imagem/moderada.png",
+    airQuality: "moderate" as AirQuality,
   },
 ];
 
 export default function IndexPage() {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure(); // Gerencia o estado aqui
-
-  const [userLocation, setUserLocation] = useState<{
-    lat: number;
-    lng: number;
-  } | null>(null);
+  const { isOpen: isFilterOpen, onOpen: onFilterOpen, onOpenChange: onFilterOpenChange } = useDisclosure();
+  const { isOpen: isAirPopupOpen, onOpen: onAirPopupOpen, onOpenChange: onAirPopupOpenChange } = useDisclosure();
+  const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedAirQuality, setSelectedAirQuality] = useState<AirQuality>("moderate");
 
   const handleLocationChange = useCallback(
     (location: { lat: number; lng: number } | null, isLoading: boolean) => {
@@ -55,7 +58,6 @@ export default function IndexPage() {
   useEffect(() => {
     if (!userLocation) return;
 
-    // Centro o mapa no usuário, zoom out pra ver Londres
     const map = L.map("map").setView([userLocation.lat, userLocation.lng], 11);
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -63,13 +65,11 @@ export default function IndexPage() {
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
 
-    // Marcador do usuário (mantido)
     L.marker([userLocation.lat, userLocation.lng])
       .addTo(map)
-      .bindPopup("You are Here!")
+      .bindPopup("You are here!")
       .openPopup();
 
-    // Adiciona os círculos coloridos com tooltip contendo texto e imagem (se houver)
     airQualityPoints.forEach((point) => {
       const tooltipContent = point.image
         ? `<div style="text-align: center; padding: 8px;">
@@ -78,26 +78,31 @@ export default function IndexPage() {
            </div>`
         : point.tooltip;
 
-      L.circle([point.lat, point.lng], {
+      const circle = L.circle([point.lat, point.lng], {
         color: point.color,
         fillColor: point.color,
         fillOpacity: 0.4,
-        radius: 800, // Raio fixo de 800m
+        radius: 800,
         weight: 2,
       })
         .addTo(map)
         .bindTooltip(tooltipContent, {
-          permanent: false, // Aparece só no hover
+          permanent: false,
           direction: "auto",
-          className: "custom-tooltip", // Para estilizar via CSS se quiser
+          className: "custom-tooltip",
         });
+
+      circle.on("click", () => {
+        console.log(`Clicked circle with quality: ${point.airQuality}`); // Debug log
+        setSelectedAirQuality(point.airQuality);
+        onAirPopupOpen();
+      });
     });
 
-    // Cleanup: Remove mapa
     return () => {
       map.remove();
     };
-  }, [userLocation]);
+  }, [userLocation, onAirPopupOpen]);
 
   return (
     <DefaultLayout>
@@ -113,11 +118,11 @@ export default function IndexPage() {
             }}
           />
           <div>
-            <Button onPress={onOpen} className="ml-5">
+            <Button onPress={onFilterOpen} className="ml-5">
               Open Filters
             </Button>
           </div>
-          <FilterPopup isOpen={isOpen} onOpenChange={onOpenChange} />
+          <FilterPopup isOpen={isFilterOpen} onOpenChange={onFilterOpenChange} />
         </div>
         {isLoading ? (
           <div
@@ -129,7 +134,7 @@ export default function IndexPage() {
         ) : (
           <div id="map" style={{ height: "400px", width: "100%" }} />
         )}
-        <AirPopup />
+        <AirPopup airQuality={selectedAirQuality} isOpen={isAirPopupOpen} onOpenChange={onAirPopupOpenChange} />
       </section>
     </DefaultLayout>
   );
