@@ -1,5 +1,11 @@
 import { Button } from "@heroui/button";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@heroui/modal";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from "@heroui/modal";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
@@ -90,7 +96,8 @@ export function AirTipsCarousel() {
         className="text-center px-3 max-w-md"
       >
         <h3 className="text-xs font-semibold text-gray-800 dark:text-gray-100 mb-0.5">
-          {tips[index].category === "Health" ? "🫁 Health Tip" : "🌿 Eco Tip"}: {tips[index].title}
+          {tips[index].category === "Health" ? "🫁 Health Tip" : "🌿 Eco Tip"}:{" "}
+          {tips[index].title}
         </h3>
         <p className="text-gray-700 dark:text-gray-300 text-[11px] leading-tight">
           {tips[index].text}
@@ -100,7 +107,11 @@ export function AirTipsCarousel() {
   );
 }
 
-export default function AirPopup({ airQuality, isOpen, onOpenChange }: AirPopupProps) {
+export default function AirPopup({
+  airQuality,
+  isOpen,
+  onOpenChange,
+}: AirPopupProps) {
   const getAirQualityContent = () => {
     switch (airQuality) {
       case "good":
@@ -158,8 +169,12 @@ export default function AirPopup({ airQuality, isOpen, onOpenChange }: AirPopupP
 
   return (
     <>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} className="z-[1000]">
-        <ModalContent>
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-4 sm:-translate-y-1/2 z-[2000] pointer-events-none"
+      >
+        <ModalContent className="w-full max-w-sm sm:max-w-md rounded-lg shadow-lg dark:shadow-gray-700/50 pointer-events-auto">
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">{title}</ModalHeader>
@@ -168,8 +183,8 @@ export default function AirPopup({ airQuality, isOpen, onOpenChange }: AirPopupP
                 <p className="flex-1">{body}</p>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Close
+                <Button color="primary" variant="light" onPress={onClose}>
+                  OK
                 </Button>
               </ModalFooter>
             </>
