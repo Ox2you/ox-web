@@ -6,7 +6,6 @@ import { UserLocation } from "../components/user-location";
 import { LocationSearch } from "../components/location-search";
 import AirPopup from "../components/air-popup";
 import FilterPopup from "../components/filter-popup";
-import { Button } from "@heroui/button";
 import { useDisclosure } from "@heroui/use-disclosure";
 import { fetchHeatmapData } from "../api/api-service";
 
@@ -42,7 +41,7 @@ const airQualityPoints = [
 ];
 
 export default function IndexPage() {
-  const { isOpen: isFilterOpen, onOpen: onFilterOpen, onOpenChange: onFilterOpenChange } = useDisclosure();
+  const { isOpen: isFilterOpen, onOpenChange: onFilterOpenChange } = useDisclosure();
   const { isOpen: isAirPopupOpen, onOpen: onAirPopupOpen, onOpenChange: onAirPopupOpenChange } = useDisclosure();
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -116,7 +115,7 @@ export default function IndexPage() {
       // Render red circles for poor air quality (|value| ∈ [0.085, 0.089])
       circlePoints.forEach((item: any) => {
         const { coordinates } = item.geometry;
-        const { value, band } = item.properties;
+        const { value } = item.properties;
         const normalizedValue = Math.round(value * 100);
         const tooltip = `
           <div style="text-align: center; padding: 8px;">
@@ -149,7 +148,7 @@ export default function IndexPage() {
       // Render other points as circles
       dataToRender.forEach((item: any) => {
         const { coordinates } = item.geometry;
-        const { value, band } = item.properties;
+        const { value } = item.properties;
         const normalizedValue = Math.round(value * 100);
         const absValue = Math.abs(value);
         let color: string;
@@ -201,20 +200,22 @@ export default function IndexPage() {
       });
 
       // Add legend to the map
-      const legend = L.control({ position: 'bottomright' });
-      legend.onAdd = function () {
-        const div = L.DomUtil.create('div', 'info legend');
-        div.style.backgroundColor = 'white';
-        div.style.padding = '6px 8px';
-        div.style.border = '2px solid rgba(0,0,0,0.2)';
-        div.style.borderRadius = '5px';
-        div.innerHTML += '<strong style="color:black">Air Quality Scale</strong><br>';
-        div.innerHTML += '<i style="background: #FF0000; width: 18px; height: 18px; display: inline-block; margin-right: 8px; color:black;"></i> <label style="color:black">Poor</label><br>';
-        div.innerHTML += '<i style="background: #E7B416; width: 18px; height: 18px; display: inline-block; margin-right: 8px;"></i> <label style="color:black">Moderate</label><br>';
-        div.innerHTML += '<i style="background: #2DC937; width: 18px; height: 18px; display: inline-block; margin-right: 8px;"></i> <label style="color:black">Good</label><br>';
-        return div;
-      };
-      legend.addTo(map);
+      const Legend = L.Control.extend({
+        options: { position: 'bottomright' },
+        onAdd: function () {
+          const div = L.DomUtil.create('div', 'info legend');
+          div.style.backgroundColor = 'white';
+          div.style.padding = '6px 8px';
+          div.style.border = '2px solid rgba(0,0,0,0.2)';
+          div.style.borderRadius = '5px';
+          div.innerHTML += '<strong style="color:black">Air Quality Scale</strong><br>';
+          div.innerHTML += '<i style="background: #FF0000; width: 18px; height: 18px; display: inline-block; margin-right: 8px; color:black;"></i> <label style="color:black">Poor</label><br>';
+          div.innerHTML += '<i style="background: #E7B416; width: 18px; height: 18px; display: inline-block; margin-right: 8px;"></i> <label style="color:black">Moderate</label><br>';
+          div.innerHTML += '<i style="background: #2DC937; width: 18px; height: 18px; display: inline-block; margin-right: 8px;"></i> <label style="color:black">Good</label><br>';
+          return div;
+        }
+      });
+      new Legend().addTo(map);
 
     } else { // Fallback data (circle mode)
       dataToRender.forEach((item: any) => {

@@ -16,7 +16,6 @@ interface LocationSearchProps {
 
 export const LocationSearch = ({ onLocationChange }: LocationSearchProps) => {
   const { theme } = useTheme();
-  const [currentTheme, setCurrentTheme] = useState(theme);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState<LocationSuggestion[]>([]);
@@ -35,7 +34,7 @@ export const LocationSearch = ({ onLocationChange }: LocationSearchProps) => {
 
   // Atualiza o tema dinamicamente
   useEffect(() => {
-    setCurrentTheme(theme);
+   // setCurrentTheme(theme);
     if (theme === "dark") document.body.classList.add("dark");
     else document.body.classList.remove("dark");
   }, [theme]);

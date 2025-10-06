@@ -1,4 +1,3 @@
-import { FeatureCollection } from 'geojson';
 
 interface HeatmapParams {
   lat: number;
