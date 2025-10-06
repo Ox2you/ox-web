@@ -263,22 +263,15 @@ export default function IndexPage() {
     <DefaultLayout>
       <UserLocation onLocationChange={handleLocationChange} />
       <section className="flex flex-col items-center justify-center gap-4">
-
-          <LocationSearch
-            onLocationChange={(location) => {
-              if (location) {
-                setUserLocation(location);
-                setIsLoading(true);
-              }
-            }}
-          />
-          {/* <div>
-            <Button onPress={onFilterOpen} className="ml-5">
-              Open Filters
-            </Button>
-          </div> */}
-          <FilterPopup isOpen={isFilterOpen} onOpenChange={onFilterOpenChange} />
-
+        <LocationSearch
+          onLocationChange={(location) => {
+            if (location) {
+              setUserLocation(location);
+              setIsLoading(true);
+            }
+          }}
+        />
+        <FilterPopup isOpen={isFilterOpen} onOpenChange={onFilterOpenChange} />
         {error && (
           <div className="text-red-500 text-center">
             {error}
@@ -289,7 +282,7 @@ export default function IndexPage() {
             className="flex items-center justify-center"
             style={{ height: "400px", width: "100%" }}
           >
-            <p>Loading map...</p>
+            <img src="/vento.gif" alt="Loading" style={{ maxWidth: "100px" }} />
           </div>
         ) : (
           <div id="map" style={{ height: "400px", width: "100%" }} />
