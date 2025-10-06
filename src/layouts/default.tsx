@@ -17,11 +17,11 @@ export default function DefaultLayout({
         <Link
           isExternal
           className="flex items-center gap-1 text-current"
-          href="https://heroui.com"
-          title="heroui.com homepage"
+          href="https://nasa.gov"
+          title="NASA"
         >
           <span className="text-default-600">Powered by</span>
-          <p className="text-primary">AIR</p>
+          <p className="text-primary">NASA</p>
         </Link>
       </footer>
     </div>
